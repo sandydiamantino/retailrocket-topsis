@@ -114,15 +114,18 @@ A taxa de conversão é calculada e apresentada de forma descritiva, mas não fa
 
 ## Baseline
 
-O baseline ordena os produtos exclusivamente pela pontuação de coocorrência, em ordem decrescente:
+A pontuação de coocorrência é utilizada como principal critério de ordenação, em ordem decrescente. Para produtos com valores iguais de coocorrência, são utilizados, sucessivamente, o grau ponderado, o PageRank e a recência como critérios de desempate.
+
+A ordenação do baseline segue a seguinte prioridade:
 
 ```text
-ranking_baseline = sort(cooccurrence_score, descending=True)
+1. cooccurrence_score, em ordem decrescente;
+2. weighted_degree, em ordem decrescente, em caso de empate;
+3. pagerank, em ordem decrescente, em caso de novo empate;
+4. recency_score, em ordem decrescente, em caso de novo empate.
 ```
 
-A taxa de conversão, PageRank, grau ponderado e recência podem aparecer na tabela final para análise, mas não são utilizados para ordenar o baseline.
-
-O baseline funciona como referência para avaliar se a combinação de múltiplos critérios oferece vantagem sobre uma única métrica de comportamento coletivo.
+O baseline funciona como uma referência simples, priorizando principalmente a coocorrência e utilizando métricas estruturais e temporais apenas para resolver empates. Ele é comparado ao TOPSIS, que combina os mesmos quatro critérios por meio de normalização, pesos e distância em relação às soluções ideal positiva e ideal negativa.
 
 ## Configuração TOPSIS
 
